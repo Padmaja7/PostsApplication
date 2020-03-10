@@ -1,0 +1,42 @@
+<div class='container-fluid'>
+  <div class='row'>
+      <h1>Posts</h1>
+      <div class="pull-right">
+        <span class='fa fa-add' (click)="showForm = true" ></span>
+      </div>
+      <form *ngIf="showForm" submit="addItem()">
+        <input type='text' name="title" [(value)]="itemTitle" /> 
+        <input type='text' name="description" [(value)]="itemDescription" /> 
+      </form>
+      <table *ngIf="posts.length > 0" class='table-responsive'>
+        <thead>
+          <th>S.no</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item for posts; let i = index">
+            <td>{{i}}</td>
+            <td *ngIf="!(editFlag && editElement === i)" [innerHTML]="item.title"></td>
+            <td *ngIf="(editFlag && editElement === i)" >
+              <input type='text' name="title" [(value)]="itemTitle" /> 
+            </td>
+            <td *ngIf="!(editFlag && editElement === i)" [innerHTML]="item.body"></td>
+            <td *ngIf="(editFlag && editElement === i)" >
+              <input type='text' name="description" [(value)]="itemDescription" /> 
+            </td>
+            <td>
+              <a class='btn fa fa-edit' (click)="editItem(item)"></a>
+              <a *ngIf="editFlag" class='btn btn-default'>Save</a>
+              <a class='btn fa fa-delete' (click) = "deleteItem(item, i)" ></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+<div class="pull-right">
+  </div>
+    <span [ngClass]="start > 0 ? 'fa fa-arrow-left' : 'fa fa-arrow-left disabled'" (click)="navigation('left)" ></span>
+    <span class='fa fa-arrow-right' (click)="navigation('right')"></span>
+  </div>
+</div>
